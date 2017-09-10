@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jms="http://www.springframework.org/schema/integration/jms"
+       xmlns:integration="http://www.springframework.org/schema/integration"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/integration/jms http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd">
+    
+    <jms:message-driven-channel-adapter id="sendSmsJMSAdapater" destination="sendSmsQueue"
+        connection-factory="jmsConnectionFactory" channel="sendSmsChannel"/>
+        
+    <integration:channel id="sendSmsChannel"/>
+    
+    <integration:service-activator id="sendSmsServiceActivator" input-channel="sendSmsChannel"
+                                   ref="sendSmsService" method="sendMessage"/>
+</beans>
